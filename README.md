@@ -54,9 +54,9 @@ PS C:\Windows\Temp> exit
 
 ---
 
-## 🧠 Deep-Dive
+## Deep-Dive
 
-### 👻 Reflective Runspace Injection (GAC Resolution)
+### Reflective Runspace Injection (GAC Resolution)
 
 Standard tools frequently break because they hardcode file system paths or pull localized SDK libraries that flag security boundaries. PowerLess leverages the Common Language Runtime (CLR) assembly loader to pull code directly from the Windows core assembly directory using its cryptographic identity token:
 
@@ -67,7 +67,7 @@ Assembly psAssembly = Assembly.Load(assemblyName);
 
 This grants access to the native production engine across any Windows platform out of the box while avoiding disk-based scanning tools looking for non-standard administrative libraries.
 
-### 🛡️ Pre-Flight Memory Patching
+### Pre-Flight Memory Patching
 
 Before the pipeline runs its first script, the application uses P/Invoke wrappers to hook core security dynamic link libraries loaded in the current process space.
 
@@ -90,7 +90,7 @@ Marshal.Copy(patch, 0, lpAddress, patch.Length);
 VirtualProtect(lpAddress, (UIntPtr)patch.Length, oldProtect, out _);
 ```
 
-### 🔄 Headless Synchronization and Stream Polling
+### Headless Synchronization and Stream Polling
 
 Traditional interactive shells often rely on blocking input calls such as `Console.ReadLine()`. While this works well for local terminals, remote execution environments such as WinRM may benefit from a different input model, particularly when the application needs to remain responsive while waiting for incoming data.
 
